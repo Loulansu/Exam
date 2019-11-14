@@ -1,0 +1,59 @@
+/* Header */
+.large-header {  
+	position: relative;  
+	width: 100%;  
+	background: #333;  
+	overflow: hidden;  
+	background-size: cover;  
+	background-position: center center;  
+	z-index: 1;}
+
+ul li a{
+	color:white;
+	font-size:12px;
+	margin-right:15px;
+	padding:0px;
+}
+ul li{
+	list-style-type:none;
+	float:right;
+	margin-top:10px;
+}
+
+.head{
+		position: absolute;
+		top: 0px; 
+		width: 100%;
+		height: 70px;
+		background-color:rgb(225, 230, 246, 0.8);
+}
+.teacherInfo{
+	width:150px;
+	height:40px;
+	margin-right:20px;
+	border-radius:5px;
+	border:1px solid red;
+}
+
+p{
+	font-color:white;
+	font-family:"宋体";
+	font-size:12px;
+	margin:0px;
+	padding:0px;
+}
+
+#welcom{
+	float:left;
+	margin-top:10px;
+	color:black;
+	font-family:"宋体";
+	font-size:18px;
+}
+.icon{
+	position: absolute;
+	left:100px;
+	width:150px;
+	height:70px;
+}
+@media only screen and (max-width: 768px) {  .demo-1 .main-title {    font-size: 3em;  }}

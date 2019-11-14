@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>添加题目</title>
+<link rel="stylesheet" href="../../css/background/style.css">
+<link rel="stylesheet" href="../../css/background/demo.css">
+<link rel="stylesheet" href="../../css/function/addItem.css">
+<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../../ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+</head>
+<body>
+<div id="large-header" class="large-header" style="height: 900px; background-image: url('../../css/background/demo-1-bg.jpg'); background-repeat: repeat;">
+	<div class="head">
+		<img src="../../images/icon/logo.png" class="icon">
+		<ul>
+			<li>
+				<a href="">修改个人信息</a>
+			</li>
+			<li>
+				<a href="a.html">首页</a>
+			</li>
+			<li>
+				<div class="teacherInfo">
+			    	<p id="welcom">XXX老师</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="bottom">
+		<form id="add_question_form">
+			<ul>
+		        <li>
+		        	<label>题目类型：</label>
+		            <select id="add_question_type" class="ipt"></select>
+					<span id="question_type"></span>
+		        </li>
+		        <li>
+		        	<label>题目难度：</label>
+		            <select id="add_question_level" class="ipt"></select>
+		            <span id="question_level"></span>
+		        </li>
+		        <li>
+		        	<label>课程类型：</label>
+		            <select id="add_course_type" class="ipt"></select>
+		            <span id="course_type"></span>
+		        </li>
+		        <li>
+		        	<label for="add_question_answer">题目答案：</label>
+		            <input type="text" name="answer" id="add_question_answer" class="ipt">
+		            <span id="question_answer"></span>
+		        </li>
+		        <li>
+		        	<label for="add_question_optionA">题目选项A：</label>
+		            <textarea  name="option" id="add_question_optionA" rows="2" cols="50"></textarea>
+		        </li>
+		        <li>
+		        	<label for="add_question_optionB">题目选项B：</label>
+		            <textarea  name="option" id="add_question_optionB" rows="2" cols="50"></textarea>
+		        </li>
+		        <li>
+		        	<label for="add_question_optionC">题目选项C：</label>
+		            <textarea  name="option" id="add_question_optionC" rows="2" cols="50"></textarea>
+		        </li>
+		        <li>
+		        	<label for="add_question_optionD">题目选项D：</label>
+		            <textarea  name="option" id="add_question_optionD" rows="2" cols="50"></textarea>
+		        </li>
+		        <li style="width: 100%;">
+		        	<label for="add_question_explain">题目解释：</label>
+		            <textarea  name="explain" id="add_question_explain" rows="2" cols="125"></textarea>
+		        </li>
+		      
+		        <li style="width: 100%;">
+		        	<label for="content">题目内容：</label>
+		            <textarea name="content" id="content" rows="4" cols="125"></textarea>
+		        </li>
+		        <li style="width:100%">
+					<input class="mybtn" onclick="addQuestion()" value="添加" type="button"/>
+				</li>
+		    </ul>
+		</form>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+	CKEDITOR.replace("content");
+	
+	$(function(){
+		$.post("../../questionType", {op:"findAll"}, function(data){
+			var str = "";
+			$.each(data, function(index, item){
+				str += "<option value='"+item.tid+"'>"+item.tname+"</option>";
+			});
+			$("#add_question_type").append($(str));
+		},"json");
+		
+		$.post("../../course", {op:"findAll"}, function(data){
+			var str = "";
+			$.each(data, function(index, item){
+				str += "<option value='"+item.coid+"'>"+item.cname+"</option>";
+			});
+			$("#add_course_type").append($(str));
+		},"json");
+		
+		$.post("../../difficult", {op:"findAll"}, function(data){
+			var str = "";
+			$.each(data, function(index, item){
+				str += "<option value='"+item.lid+"'>"+item.level+"</option>";
+			});
+			$("#add_question_level").append($(str));
+		},"json");
+		
+		$("#add_question_type").focus(function(){$("#question_type").html("");});
+		$("#add_question_level").focus(function(){$("#question_level").html("");});
+		$("#add_course_type").focus(function(){$("#course_type").html("");});
+		$("#add_question_answer").focus(function(){$("#question_answer").html("");});
+	})
+	
+	function addQuestion() {
+		var tid = $.trim($("#add_question_type").val());
+		var lid = $.trim($("#add_question_level").val());
+		var coid = $.trim($("#add_course_type").val());
+		var answer = $.trim($("#add_question_answer").val());
+		var option1 = $.trim($("#add_question_optionA").val());
+		var option2 = $.trim($("#add_question_optionB").val());
+		var option3 = $.trim($("#add_question_optionC").val());
+		var option4 = $.trim($("#add_question_optionD").val());
+		var expression = $.trim($("#add_question_explain").val());
+		var content = CKEDITOR.instances.content.getData();
+		
+		if(tid == "") {
+			$("#question_type").html("题目类型不能为空！");
+			return;
+		}
+		if(lid == "") {
+			$("#question_level").html("题目难度不能为空！");
+			return;
+		}
+		if(coid == "") {
+			$("#course_type").html("课程类型不能为空！");
+			return;
+		}
+		if(answer == "") {
+			$("#question_answer").html("题目答案不能为空！");
+			return;
+		}
+		
+		$.ajaxFileUpload({
+			url:"../../questions?op=add",
+			secureuri:false,
+			data: {tid:tid, content:content, answer:answer, lid:lid, option1:option1, option2:option2,
+				option3:option3, option4:option4, expression:expression, coid:coid},
+			dataType: "text",
+			success: function(data, status) {
+				data = parseInt($.trim(data));
+				System.out.println(data);
+				if(data == -1) {
+					alert("您输入的信息不完整，请确认后重新输入...");
+				} else if(data > 0) {
+					$("#add_question_form")[0].reset();
+					CKEDITOR.instances.content.setData("");
+					alert("题目添加成功...");
+				} else {
+					alert("题目添加失败...");
+				}
+			},
+			error: function(data, status, e) {
+				alert("题目添加失败...");
+			}
+		})
+	}
+</script>
+</html>

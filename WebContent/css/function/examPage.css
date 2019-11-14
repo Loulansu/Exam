@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+.left{
+	position: absolute;
+	top: 75px; 
+	width: 49%;
+	height: 100%;
+	background-color:rgb(225, 230, 246, 0.8);
+}
+
+.right{
+	position: absolute;
+	top: 75px; 
+	left: 51%;
+	width: 50%;
+	height: 100%;
+	background-color:rgb(225, 230, 246, 0.8);
+}

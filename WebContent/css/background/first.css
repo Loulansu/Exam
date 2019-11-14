@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+
+#large-header {  
+	background-image: url("../../css/background/Starry.jpg");
+}
+.thin{
+	margin:0px;
+	padding-top:10px;
+	padding-left:10px;
+	color:black;
+	font-family:"宋体";
+	font-size:10px;
+}
+
+.Allimage{
+		position: absolute; 
+		top:100px;
+		left:300px;
+		width:670px;
+		box-shadow: 5px 10px 5px 10px rgba(255,255,255,0.4);
+}
+.main-title{
+	margin:0px;
+	padding-top:10px;
+	padding-left:10px;
+	color:black;
+	font-size: 18px;
+	font-family:"宋体";
+}
+#image-float{
+	float:left;
+	margin-top:20px;
+	margin-left:30px;
+	width:180px;
+	height:200px;
+	background-color: rgb(255, 255, 255);
+	box-shadow: 5px 0px 5px rgba(255,255,255,0.9);
+}
